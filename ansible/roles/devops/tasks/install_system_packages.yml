@@ -1,8 +1,0 @@
-- name: install system packages
-  become: yes
-  become_method: sudo
-  apt:
-    update_cache: true
-    pkg:
-      - python3-pip
-      - unzip

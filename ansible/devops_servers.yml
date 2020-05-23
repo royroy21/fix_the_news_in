@@ -1,5 +1,0 @@
----
-- name: configure devops server
-  hosts: devops_servers
-  roles:
-    - devops
