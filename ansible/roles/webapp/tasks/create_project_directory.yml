@@ -1,0 +1,10 @@
+---
+- name: create web root directory
+  become: yes
+  become_method: sudo
+  file:
+    group: "{{ project_user }}"
+    owner: "{{ project_user }}"
+    path: "{{ project_root }}"
+    state: directory
+    mode: "0770"

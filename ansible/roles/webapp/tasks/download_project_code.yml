@@ -1,0 +1,17 @@
+---
+- name: create project directory
+  become: yes
+  become_method: sudo
+  file:
+    group: "{{ project_user }}"
+    owner: "{{ project_user }}"
+    path: "{{ project_path }}"
+    state: directory
+    mode: "0770"
+
+- name: download project code
+  become: yes
+  become_user: "{{ project_user }}"
+  git:
+    repo: "{{ project_repo }}"
+    dest: "{{ project_path }}"

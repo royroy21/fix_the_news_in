@@ -1,0 +1,8 @@
+---
+- import_tasks: install_system_packages.yml
+- import_tasks: install_node.yml
+- import_tasks: create_project_directory.yml
+- import_tasks: download_project_code.yml
+- import_tasks: install_project_packages.yml
+- import_tasks: create_build.yml
+- import_tasks: copy_build_files_to_web_root.yml

@@ -1,0 +1,20 @@
+---
+- name: create .ssh directory
+  become: yes
+  become_method: sudo
+  file:
+    group: "{{ devops_user }}"
+    owner: "{{ devops_user }}"
+    path: "{{ devops_home_directory }}/.ssh"
+    state: directory
+    mode: "0755"
+
+- name: template a file to "{{ devops_home_directory }}/.ssh/id_rsa.pub"
+  become: yes
+  become_method: sudo
+  template:
+    src: roles/devops/templates/id_rsa.pub.j2
+    dest: "{{ devops_home_directory }}/.aws/id_rsa.pub"
+    owner: "{{ devops_user }}"
+    group: "{{ devops_user }}"
+    mode: "0644"

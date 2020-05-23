@@ -1,0 +1,10 @@
+---
+- import_tasks: install_system_packages.yml
+- import_tasks: install_ansible.yml
+- import_tasks: create_downloads_directory.yml
+- import_tasks: install_terraform.yml
+- import_tasks: install_aws.yml
+- import_tasks: setup_aws_credentials.yml
+- import_tasks: setup_local_ssl_certificates.yml
+- import_tasks: download_project_code.yml
+- import_tasks: copy_secrets.yml

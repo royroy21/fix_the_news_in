@@ -1,0 +1,11 @@
+---
+- name: install system packages
+  become: yes
+  become_method: sudo
+  apt:
+    update_cache: true
+    pkg:
+      - acl
+      - libpq-dev
+      - postgresql-12
+      - python3-psycopg2

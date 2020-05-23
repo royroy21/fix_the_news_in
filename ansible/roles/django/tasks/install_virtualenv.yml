@@ -1,0 +1,7 @@
+---
+- name: install virtualenv via pip
+  become: yes
+  become_method: sudo
+  pip:
+    name: virtualenv
+    executable: pip3

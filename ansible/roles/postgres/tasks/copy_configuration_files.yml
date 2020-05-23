@@ -1,0 +1,24 @@
+---
+- name: template a file to /etc/postgresql/12/main/postgresql.conf
+  become: yes
+  become_method: sudo
+  template:
+    src: roles/postgres/templates/postgresql.j2
+    dest: /etc/postgresql/12/main/postgresql.conf
+    owner: postgres
+    group: postgres
+    mode: '0644'
+
+- name: template a file to /etc/postgresql/12/main/pg_hba.conf
+  become: yes
+  become_method: sudo
+  template:
+    src: roles/postgres/templates/pg_hba.j2
+    dest: /etc/postgresql/12/main/pg_hba.conf
+    owner: postgres
+    group: postgres
+    mode: '0640'
+
+- name: force-notify that postgres service needs to be restarted
+  command: /bin/true
+  notify: restart postgresql service

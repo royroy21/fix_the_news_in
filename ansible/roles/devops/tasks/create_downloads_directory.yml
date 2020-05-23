@@ -1,0 +1,9 @@
+- name: create downloads directory
+  become: yes
+  become_method: sudo
+  file:
+    group: root
+    owner: root
+    path: "{{ downloads_directory }}"
+    state: directory
+    mode: "0770"

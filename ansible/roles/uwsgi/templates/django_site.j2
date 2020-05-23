@@ -1,0 +1,21 @@
+[uwsgi]
+uid             = {{ project_user }}
+gid             = {{ project_user }}
+chdir           = {{ project_path }}
+wsgi-file       = {{ project_path }}/fix_the_news/core/wsgi.py
+home            = {{ project_venv }}
+master          = true
+processes       = 10
+socket          = {{ socket_directory }}/fn.sock
+chmod-socket    = 664
+vacuum          = true
+plugins         = python3
+env             = DJANGO_SETTINGS_MODULE={{ DJANGO_SETTINGS_MODULE }}
+env             = DATABASE_NAME={{ DATABASE_NAME }}
+env             = DATABASE_USER={{ DATABASE_USER }}
+env             = DATABASE_PASSWORD={{ DATABASE_PASSWORD }}
+env             = DATABASE_HOST={{ DATABASE_HOST }}
+env             = DATABASE_PORT={{ DATABASE_PORT }}
+env             = DJANGO_HOST={{ DJANGO_HOST }}
+env             = DJANGO_SETTINGS_MODULE={{ DJANGO_SETTINGS_MODULE }}
+env             = WEB_APP_HOST={{ WEB_APP_HOST }}

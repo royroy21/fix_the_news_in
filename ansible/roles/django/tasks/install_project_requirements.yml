@@ -1,0 +1,7 @@
+---
+- name: install project requirements into virtual environment
+  become: yes
+  become_user: "{{ project_user }}"
+  pip:
+    requirements: "{{ project_path }}/requirements.txt"
+    virtualenv: "{{ project_venv }}"

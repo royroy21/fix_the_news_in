@@ -1,0 +1,5 @@
+---
+- name: copy build files to web root
+  become: yes
+  become_user: "{{ project_user }}"
+  command: "cp -ar {{ project_path }}/build {{ webroot }}"

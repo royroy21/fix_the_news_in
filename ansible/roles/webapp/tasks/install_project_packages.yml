@@ -1,0 +1,16 @@
+---
+- name: change permissions to address npm install error
+  become: yes
+  become_method: sudo
+  file:
+    path: /var/www/.npm
+    owner: "{{ project_user }}"
+    group: "{{ project_user }}"
+    recurse: yes
+
+- name: install project packages
+  become: yes
+  become_user: "{{ project_user }}"
+  command: "npm install"
+  args:
+    chdir: "{{ project_path }}"

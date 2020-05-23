@@ -1,0 +1,30 @@
+---
+- name: create project media directory
+  become: yes
+  become_method: sudo
+  file:
+    group: "{{ project_user }}"
+    owner: "{{ project_user }}"
+    path: "{{ media_directory }}"
+    state: directory
+    mode: "0770"
+
+- name: create project static directory
+  become: yes
+  become_method: sudo
+  file:
+    group: "{{ project_user }}"
+    owner: "{{ project_user }}"
+    path: "{{ static_directory }}"
+    state: directory
+    mode: "0770"
+
+- name: create web root directory
+  become: yes
+  become_method: sudo
+  file:
+    group: "{{ project_user }}"
+    owner: "{{ project_user }}"
+    path: "{{ web_root }}"
+    state: directory
+    mode: "0770"

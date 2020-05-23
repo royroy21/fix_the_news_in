@@ -1,0 +1,7 @@
+---
+- name: delete all .pyc files in django source code
+  become: yes
+  become_user: "{{ project_user }}"
+  command: find . -name '*.pyc' -delete
+  args:
+    chdir: "{{ project_path }}"

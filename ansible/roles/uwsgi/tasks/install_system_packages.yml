@@ -1,0 +1,9 @@
+---
+- name: install system packages
+  become: yes
+  become_method: sudo
+  apt:
+    update_cache: true
+    pkg:
+      - uwsgi
+      - uwsgi-plugin-python3

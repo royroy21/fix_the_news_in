@@ -1,0 +1,9 @@
+---
+- name: create build
+  become: yes
+  become_user: "{{ project_user }}"
+  command: "npm run build"
+  environment:
+    - REACT_APP_BACKEND_API_URL: "{{ REACT_APP_BACKEND_API_URL }}"
+  args:
+    chdir: "{{ project_path }}"

@@ -1,0 +1,9 @@
+---
+- name: create database user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    db: "{{ DATABASE_NAME }}"
+    name: "{{ DATABASE_USER }}"
+    password: "{{ DATABASE_PASSWORD }}"
+    priv: "ALL"

@@ -1,0 +1,7 @@
+---
+- name: restart uwsgi
+  become: yes
+  become_method: sudo
+  service:
+    name: uwsgi
+    state: restarted

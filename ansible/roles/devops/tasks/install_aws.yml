@@ -1,0 +1,23 @@
+---
+- name: download aws cli
+  become: yes
+  become_method: sudo
+  get_url:
+    url: "{{ aws_download_url }}"
+    dest: "{{ downloads_directory }}"
+    mode: "0644"
+
+- name: unzip aws cli
+  become: yes
+  become_method: sudo
+  unarchive:
+    src: "{{ downloads_directory }}/{{ aws_filename }}"
+    dest: "{{ downloads_directory }}"
+    remote_src: yes
+
+- name: install aws cli
+  become: yes
+  become_method: sudo
+  command: "./aws/install --update"
+  args:
+    chdir: "{{ downloads_directory }}"

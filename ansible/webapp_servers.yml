@@ -1,0 +1,6 @@
+---
+- name: install and configure Django and Nginx
+  hosts: webapp_servers
+  roles:
+    - nginx
+    - webapp

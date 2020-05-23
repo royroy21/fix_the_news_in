@@ -1,0 +1,4 @@
+---
+- name: install ansible {{ ansible_devops_version }}
+  pip:
+    name: ansible=={{ ansible_devops_version }}

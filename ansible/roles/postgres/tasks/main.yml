@@ -1,0 +1,5 @@
+---
+- import_tasks: install_system_packages.yml
+- import_tasks: copy_configuration_files.yml
+- import_tasks: create_database.yml
+- import_tasks: create_database_user.yml

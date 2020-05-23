@@ -1,0 +1,4 @@
+---
+- import_tasks: install_system_packages.yml
+- import_tasks: copy_files.yml
+- import_tasks: restart_service.yml

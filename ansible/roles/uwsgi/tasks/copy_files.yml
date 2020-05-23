@@ -1,0 +1,20 @@
+---
+- name: create directory for socket
+  become: yes
+  become_method: sudo
+  file:
+    group: "{{ project_user }}"
+    owner: "{{ project_user }}"
+    path: "{{ socket_directory }}"
+    state: directory
+    mode: "0770"
+
+- name: template a file to /etc/uwsgi/apps-enabled/{{ uwsgi_site_file }}.ini
+  become: yes
+  become_method: sudo
+  template:
+    src: roles/uwsgi/templates/{{ uwsgi_site_file }}.j2
+    dest: /etc/uwsgi/apps-enabled/{{ uwsgi_site_file }}.ini
+    owner: "{{ project_user }}"
+    group: "{{ project_user }}"
+    mode: '0500'

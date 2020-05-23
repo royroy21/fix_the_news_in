@@ -1,0 +1,17 @@
+---
+- name: migrate database
+  become: yes
+  become_user: "{{ project_user }}"
+  django_manage:
+    app_path: "{{ project_path }}"
+    command: "migrate --noinput"
+    virtualenv: "{{ project_venv }}"
+  environment:
+    - DATABASE_NAME: "{{ DATABASE_NAME }}"
+    - DATABASE_USER: "{{ DATABASE_USER }}"
+    - DATABASE_PASSWORD: "{{ DATABASE_PASSWORD }}"
+    - DATABASE_HOST: "{{ DATABASE_HOST }}"
+    - DATABASE_PORT: "{{ DATABASE_PORT }}"
+    - DJANGO_HOST: "{{ DJANGO_HOST }}"
+    - DJANGO_SETTINGS_MODULE: "{{ DJANGO_SETTINGS_MODULE }}"
+    - WEB_APP_HOST: "{{ WEB_APP_HOST }}"

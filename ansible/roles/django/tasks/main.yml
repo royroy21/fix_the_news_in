@@ -1,0 +1,9 @@
+---
+- import_tasks: install_system_packages.yml
+- import_tasks: download_project_code.yml
+- import_tasks: create_project_directories.yml
+- import_tasks: install_virtualenv.yml
+- import_tasks: install_project_requirements.yml
+- import_tasks: clean_up_pyc_files.yml
+- import_tasks: collect_static.yml
+- import_tasks: run_django_migrations.yml

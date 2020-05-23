@@ -1,0 +1,27 @@
+server {
+    listen 80;
+    server_name {{ DJANGO_HOST }};
+
+    location /static/ {
+       alias {{ static_directory }}/;
+    }
+
+    location /media/ {
+        alias {{ media_directory }}/;
+    }
+
+    location / {
+       alias /app/root/;
+    }
+
+    location /api/ {
+        uwsgi_pass unix:///app/socket/fn.sock;
+        include uwsgi_params;
+        uwsgi_read_timeout 300s;
+        client_max_body_size 32m;
+    }
+
+    # location = /favicon.ico {
+    #     alias /var/www/prod_demo/app/static/images/favicon.ico;
+    # }
+}
