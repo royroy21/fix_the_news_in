@@ -21,3 +21,6 @@ The devops server is responsible for creating/renewing and pushing SSL certifica
 All files in the inventories directory are encrypted. A password.txt file is required to decrypt these files. 
 
 The password.txt file is not part of this repo.
+
+## Quick start
+ansible-playbook devops_servers.yml -i inventories/devops --vault-id password.txt
