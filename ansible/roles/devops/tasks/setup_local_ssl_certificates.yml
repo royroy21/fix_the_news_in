@@ -14,7 +14,7 @@
   become_method: sudo
   template:
     src: roles/devops/templates/id_rsa.pub.j2
-    dest: "{{ devops_home_directory }}/.aws/id_rsa.pub"
+    dest: "{{ devops_home_directory }}/.ssh/id_rsa.pub"
     owner: "{{ devops_user }}"
     group: "{{ devops_user }}"
     mode: "0644"
