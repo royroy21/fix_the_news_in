@@ -1,9 +1,20 @@
 server {
-    listen 80;
+    listen 443 ssl;
+    ssl_certificate /etc/letsencrypt/live/fixthenews.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/fixthenews.com/privkey.pem;
+
     server_name {{ domain }};
 
     root {{ webroot }};
 
     location / {
     }
+}
+server {
+    if ($host = {{ domain }}) {
+        return 301 https://$host$request_uri;
+    }
+    listen 80;
+    server_name {{ domain }};
+    return 404;
 }

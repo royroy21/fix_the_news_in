@@ -4,4 +4,5 @@
   roles:
     - django
     - uwsgi
+    - copy_ssl_certificates
     - nginx
