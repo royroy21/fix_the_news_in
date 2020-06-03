@@ -7,6 +7,8 @@
     command: "migrate --noinput"
     virtualenv: "{{ project_venv }}"
   environment:
+    - SECRET_KEY: "{{ SECRET_KEY }}"
+    - DEBUG: "{{ DEBUG }}"
     - DATABASE_NAME: "{{ DATABASE_NAME }}"
     - DATABASE_USER: "{{ DATABASE_USER }}"
     - DATABASE_PASSWORD: "{{ DATABASE_PASSWORD }}"
