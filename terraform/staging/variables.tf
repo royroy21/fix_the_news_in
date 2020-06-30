@@ -1,5 +1,13 @@
-variable "public_key" {
-  description = "Public key used for ssh into AWS servers"
+variable "environment" {
+  description = "Environment"
+}
+
+variable "database_name" {
+  description = "database's URL prefix"
+}
+
+variable "django_name" {
+  description = "django's URL prefix"
 }
 
 variable "cloudflare_email" {
@@ -12,4 +20,12 @@ variable "cloudflare_api_key" {
 
 variable "cloudflare_zone_id" {
   description = "DNS zone id for Cloudflare"
+}
+
+variable "public_key" {
+  description = "Public key used for ssh into AWS servers"
+}
+
+variable "webapp_name" {
+  description = "webapp's URL prefix"
 }

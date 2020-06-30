@@ -8,16 +8,16 @@ provider "cloudflare" {
   api_key = var.cloudflare_api_key
 }
 
-resource "aws_key_pair" "deployer_staging" {
-  key_name   = "deployer_key_staging"
+resource "aws_key_pair" "deployer" {
+  key_name   = "${var.environment}_deployer_key"
   public_key = var.public_key
 }
 
 ###############################################################################
 # Security groups
 ###############################################################################
-resource "aws_security_group" "ssh_staging" {
-  name = "ssh_staging"
+resource "aws_security_group" "ssh" {
+  name = "${var.environment}_ssh"
   ingress {
     from_port   = 22
     to_port     = 22
@@ -44,8 +44,8 @@ resource "aws_security_group" "ssh_staging" {
   }
 }
 
-resource "aws_security_group" "http_staging" {
-  name = "http_staging"
+resource "aws_security_group" "http" {
+  name = "${var.environment}_http"
   ingress {
     from_port   = 80
     to_port     = 80
@@ -73,8 +73,8 @@ resource "aws_security_group" "http_staging" {
 
 }
 
-resource "aws_security_group" "https_staging" {
-  name = "https_staging"
+resource "aws_security_group" "https" {
+  name = "${var.environment}_https"
   ingress {
     from_port   = 443
     to_port     = 443
@@ -101,8 +101,8 @@ resource "aws_security_group" "https_staging" {
   }
 }
 
-resource "aws_security_group" "postgres_staging" {
-  name = "postgres_staging"
+resource "aws_security_group" "postgres" {
+  name = "${var.environment}_postgres"
   ingress {
     from_port   = 5432
     to_port     = 5432
@@ -132,100 +132,100 @@ resource "aws_security_group" "postgres_staging" {
 ###############################################################################
 # Django instance
 ###############################################################################
-resource "aws_instance" "django_staging" {
+resource "aws_instance" "django" {
   ami                    = "ami-0917237b4e71c5759"
   instance_type          = "t2.micro"
-  key_name               = aws_key_pair.deployer_staging.key_name
+  key_name               = aws_key_pair.deployer.key_name
   tags                   = {
-    Name = "django-fn-staging",
+    Name = "${var.environment}_fn_django",
   }
   vpc_security_group_ids = [
-    aws_security_group.ssh_staging.id,
-    aws_security_group.http_staging.id,
-    aws_security_group.https_staging.id,
+    aws_security_group.ssh.id,
+    aws_security_group.http.id,
+    aws_security_group.https.id,
   ]
 }
 
-resource "aws_eip" "django_staging" {
+resource "aws_eip" "django" {
     vpc      = true
-    instance = aws_instance.django_staging.id
+    instance = aws_instance.django.id
 }
 
 output "django_server_public_ip" {
-  value = aws_eip.django_staging.public_ip
+  value = aws_eip.django.public_ip
 }
 
 ###############################################################################
 # Database instance
 ###############################################################################
-resource "aws_instance" "database_staging" {
+resource "aws_instance" "database" {
   ami                    = "ami-0917237b4e71c5759"
   instance_type          = "t2.micro"
-  key_name               = aws_key_pair.deployer_staging.key_name
+  key_name               = aws_key_pair.deployer.key_name
   tags                   = {
-    Name = "database-fn-staging",
+    Name = "${var.environment}_fn_database",
   }
   vpc_security_group_ids = [
-    aws_security_group.ssh_staging.id,
-    aws_security_group.postgres_staging.id,
+    aws_security_group.ssh.id,
+    aws_security_group.postgres.id,
   ]
 }
 
-resource "aws_eip" "database_staging" {
+resource "aws_eip" "database" {
     vpc      = true
-    instance = aws_instance.database_staging.id
+    instance = aws_instance.database.id
 }
 
-output "database_server_public_ip_staging" {
-  value = aws_eip.database_staging.public_ip
+output "database_server_public_ip" {
+  value = aws_eip.database.public_ip
 }
 
 ###############################################################################
 # Webapp
 ###############################################################################
-resource "aws_instance" "webapp_staging" {
+resource "aws_instance" "webapp" {
   ami                    = "ami-0917237b4e71c5759"
   instance_type          = "t2.micro"
-  key_name               = aws_key_pair.deployer_staging.key_name
+  key_name               = aws_key_pair.deployer.key_name
   tags                   = {
-    Name = "webapp-fn-staging",
+    Name = "${var.environment}_fn_webapp",
   }
   vpc_security_group_ids = [
-    aws_security_group.ssh_staging.id,
-    aws_security_group.http_staging.id,
-    aws_security_group.https_staging.id,
+    aws_security_group.ssh.id,
+    aws_security_group.http.id,
+    aws_security_group.https.id,
   ]
 }
 
-resource "aws_eip" "webapp_staging" {
+resource "aws_eip" "webapp" {
     vpc      = true
-    instance = aws_instance.webapp_staging.id
+    instance = aws_instance.webapp.id
 }
 
-output "webapp_server_public_ip_staging" {
-  value = aws_eip.webapp_staging.public_ip
+output "webapp_server_public_ip" {
+  value = aws_eip.webapp.public_ip
 }
 
 ###############################################################################
 # DNS
 ###############################################################################
-resource "cloudflare_record" "django_staging" {
+resource "cloudflare_record" "django" {
   zone_id = var.cloudflare_zone_id
-  name    = "api.staging"
-  value   = aws_eip.django_staging.public_ip
+  name    = var.database_name
+  value   = aws_eip.django.public_ip
   type    = "A"
 }
 
-resource "cloudflare_record" "database_staging" {
+resource "cloudflare_record" "database" {
   zone_id = var.cloudflare_zone_id
-  name    = "database.staging"
-  value   = aws_eip.database_staging.public_ip
+  name    = var.database_name
+  value   = aws_eip.database.public_ip
   type    = "A"
 }
 
-resource "cloudflare_record" "webapp_staging" {
+resource "cloudflare_record" "webapp" {
   zone_id = var.cloudflare_zone_id
-  name    = "staging"
-  value   = aws_eip.webapp_staging.public_ip
+  name    = var.webapp_name
+  value   = aws_eip.webapp.public_ip
   type    = "A"
 }
