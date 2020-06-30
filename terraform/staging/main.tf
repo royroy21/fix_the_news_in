@@ -211,7 +211,7 @@ output "webapp_server_public_ip" {
 ###############################################################################
 resource "cloudflare_record" "django" {
   zone_id = var.cloudflare_zone_id
-  name    = var.database_name
+  name    = var.django_name
   value   = aws_eip.django.public_ip
   type    = "A"
 }
