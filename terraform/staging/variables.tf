@@ -10,6 +10,10 @@ variable "django_name" {
   description = "django's URL prefix"
 }
 
+variable "domain_name" {
+  description = "root domain name"
+}
+
 variable "cloudflare_email" {
   description = "Email address for access to Cloudflare"
 }
