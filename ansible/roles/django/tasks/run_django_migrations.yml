@@ -7,6 +7,8 @@
     command: "migrate --noinput"
     virtualenv: "{{ project_venv }}"
   environment:
+    - AWS_ACCESS_KEY_ID: "{{ AWS_ACCESS_KEY_ID }}"
+    - AWS_SECRET_ACCESS_KEY: "{{ AWS_SECRET_ACCESS_KEY }}"
     - SECRET_KEY: "{{ SECRET_KEY }}"
     - DEBUG: "{{ DEBUG }}"
     - DATABASE_NAME: "{{ DATABASE_NAME }}"
