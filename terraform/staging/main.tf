@@ -171,7 +171,7 @@ resource "aws_instance" "database" {
   ]
 }
 
-output "database_server_public_ip" {
+output "database_server_private_ip" {
   value = aws_instance.database.private_ip
 }
 
