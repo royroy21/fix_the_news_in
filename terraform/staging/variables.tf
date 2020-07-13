@@ -2,10 +2,6 @@ variable "environment" {
   description = "Environment"
 }
 
-variable "database_name" {
-  description = "database's URL prefix"
-}
-
 variable "django_name" {
   description = "django's URL prefix"
 }

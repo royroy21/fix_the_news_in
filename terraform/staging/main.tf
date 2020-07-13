@@ -171,13 +171,8 @@ resource "aws_instance" "database" {
   ]
 }
 
-resource "aws_eip" "database" {
-    vpc      = true
-    instance = aws_instance.database.id
-}
-
 output "database_server_public_ip" {
-  value = aws_eip.database.public_ip
+  value = aws_instance.database.private_ip
 }
 
 ###############################################################################
@@ -213,13 +208,6 @@ resource "cloudflare_record" "django" {
   zone_id = var.cloudflare_zone_id
   name    = var.django_name
   value   = aws_eip.django.public_ip
-  type    = "A"
-}
-
-resource "cloudflare_record" "database" {
-  zone_id = var.cloudflare_zone_id
-  name    = var.database_name
-  value   = aws_eip.database.public_ip
   type    = "A"
 }
 
