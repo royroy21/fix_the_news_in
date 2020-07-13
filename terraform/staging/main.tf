@@ -155,6 +155,13 @@ output "django_server_public_ip" {
   value = aws_eip.django.public_ip
 }
 
+resource "cloudflare_record" "django" {
+  zone_id = var.cloudflare_zone_id
+  name    = var.django_name
+  value   = aws_eip.django.public_ip
+  type    = "A"
+}
+
 ###############################################################################
 # Database instance
 ###############################################################################
@@ -199,16 +206,6 @@ resource "aws_eip" "webapp" {
 
 output "webapp_server_public_ip" {
   value = aws_eip.webapp.public_ip
-}
-
-###############################################################################
-# DNS
-###############################################################################
-resource "cloudflare_record" "django" {
-  zone_id = var.cloudflare_zone_id
-  name    = var.django_name
-  value   = aws_eip.django.public_ip
-  type    = "A"
 }
 
 resource "cloudflare_record" "webapp" {
