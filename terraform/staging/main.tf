@@ -129,6 +129,62 @@ resource "aws_security_group" "postgres" {
   }
 }
 
+resource "aws_security_group" "rabbit" {
+  name = "${var.environment}_rabbit"
+  ingress {
+    from_port   = 5672
+    to_port     = 5672
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port       = 5672
+    to_port         = 5672
+    protocol        = "tcp"
+    ipv6_cidr_blocks = ["::/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    ipv6_cidr_blocks = ["::/0"]
+  }
+}
+
+resource "aws_security_group" "rabbit_management" {
+  name = "${var.environment}_rabbit_management"
+  ingress {
+    from_port   = 15672
+    to_port     = 15672
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port       = 15672
+    to_port         = 15672
+    protocol        = "tcp"
+    ipv6_cidr_blocks = ["::/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    ipv6_cidr_blocks = ["::/0"]
+  }
+}
+
 ###############################################################################
 # Django instance
 ###############################################################################
@@ -140,9 +196,10 @@ resource "aws_instance" "django" {
     Name = "${var.environment}_fn_django",
   }
   vpc_security_group_ids = [
-    aws_security_group.ssh.id,
     aws_security_group.http.id,
     aws_security_group.https.id,
+    aws_security_group.rabbit.id,
+    aws_security_group.ssh.id,
   ]
 }
 
@@ -213,6 +270,47 @@ resource "cloudflare_record" "webapp" {
   name    = var.webapp_name
   value   = aws_eip.webapp.public_ip
   type    = "A"
+}
+
+###############################################################################
+# RabbitMQ
+###############################################################################
+resource "aws_instance" "rabbit" {
+  ami                    = "ami-0917237b4e71c5759"
+  instance_type          = "t2.micro"
+  key_name               = aws_key_pair.deployer.key_name
+  tags                   = {
+    Name = "${var.environment}_fn_rabbit",
+  }
+  vpc_security_group_ids = [
+    aws_security_group.rabbit.id,
+    aws_security_group.rabbit_management.id,
+    aws_security_group.ssh.id,
+  ]
+}
+
+output "rabbit_server_private_ip" {
+  value = aws_instance.rabbit.private_ip
+}
+
+###############################################################################
+# Default celery worker
+###############################################################################
+resource "aws_instance" "default_celery_worker" {
+  ami                    = "ami-0917237b4e71c5759"
+  instance_type          = "t2.micro"
+  key_name               = aws_key_pair.deployer.key_name
+  tags                   = {
+    Name = "${var.environment}_fn_default_celery_worker",
+  }
+  vpc_security_group_ids = [
+    aws_security_group.rabbit.id,
+    aws_security_group.ssh.id,
+  ]
+}
+
+output "default_celery_worker_server_private_ip" {
+  value = aws_instance.default_celery_worker.private_ip
 }
 
 ###############################################################################
