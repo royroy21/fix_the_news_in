@@ -13,6 +13,7 @@
     repo: "deb http://www.rabbitmq.com/debian/ testing main"
     state: present
     update_cache: yes
+    filename: rabbitmq.list
 
 - name: install rabbitmq
   apt:
