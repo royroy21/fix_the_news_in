@@ -6,3 +6,4 @@
     - uwsgi
     - copy_ssl_certificates
     - nginx
+    - rabbit
