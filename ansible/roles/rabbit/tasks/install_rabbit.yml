@@ -15,22 +15,6 @@
     update_cache: yes
     filename: rabbitmq
 
-- name: add erland key
-  become: yes
-  become_method: sudo
-  apt_key:
-    url: "https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc"
-    state: present
-
-- name: add erlang repo
-  become: yes
-  become_method: sudo
-  apt_repository:
-    repo: "deb https://packages.erlang-solutions.com/ubuntu focal contrib"
-    state: present
-    update_cache: yes
-    filename: erlang
-
 - name: install rabbitmq
   become: yes
   become_method: sudo
