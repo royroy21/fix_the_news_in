@@ -46,8 +46,13 @@
   rabbitmq_plugin:
     names: rabbitmq_management
     state: enabled
-  notify:
-    - restart rabbitmq
+
+- name: restart rabbit
+  become: yes
+  become_method: sudo
+  service:
+    name: rabbitmq-server
+    state: restarted
 
 - name: add rabbitmq users admin
   become: yes
