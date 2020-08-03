@@ -38,6 +38,8 @@
     name: rabbitmq-server
     state: restarted
 
+# TODO - cannot login with this user.
+# Currently creating user manually
 - name: add rabbitmq users admin
   become: yes
   become_method: sudo
