@@ -1,11 +1,4 @@
 ---
-- name: add trusted rabbit key
-  become: yes
-  become_method: sudo
-  apt_key:
-    url: "https://www.rabbitmq.com/rabbitmq-release-signing-key.asc"
-    state: present
-
 - name: add rabbit repo
   become: yes
   become_method: sudo
@@ -13,7 +6,30 @@
     repo: "deb http://www.rabbitmq.com/debian/ testing main"
     state: present
     update_cache: yes
-    filename: rabbitmq.list
+    filename: rabbitmq
+
+- name: add trusted rabbit key
+  become: yes
+  become_method: sudo
+  apt_key:
+    url: "https://www.rabbitmq.com/rabbitmq-release-signing-key.asc"
+    state: present
+
+- name: add erland repo
+  become: yes
+  become_method: sudo
+  apt_repository:
+    repo: "deb https://packages.erlang-solutions.com/ubuntu focal contrib"
+    state: present
+    update_cache: yes
+    filename: erland
+
+- name: add erland key
+  become: yes
+  become_method: sudo
+  apt_key:
+    url: "https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc"
+    state: present
 
 - name: install rabbitmq
   become: yes
@@ -22,6 +38,7 @@
     name: rabbitmq-server
     state: present
     update_cache: yes
+    install_recommends: yes
 
 - name: enable rabbitmq plugins
   become: yes
