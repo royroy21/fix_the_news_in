@@ -15,14 +15,14 @@
     url: "https://www.rabbitmq.com/rabbitmq-release-signing-key.asc"
     state: present
 
-- name: add erland repo
+- name: add erlang repo
   become: yes
   become_method: sudo
   apt_repository:
     repo: "deb https://packages.erlang-solutions.com/ubuntu focal contrib"
     state: present
     update_cache: yes
-    filename: erland
+    filename: erlang
 
 - name: add erland key
   become: yes
