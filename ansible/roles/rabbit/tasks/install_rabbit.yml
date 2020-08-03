@@ -3,14 +3,14 @@
   become: yes
   become_method: sudo
   apt_key:
-    url: "http://www.rabbitmq.com/rabbitmq-signing-key-public.asc"
+    url: "https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey"
     state: present
 
 - name: add rabbit repo
   become: yes
   become_method: sudo
   apt_repository:
-    repo: "deb http://www.rabbitmq.com/debian/ testing main"
+    repo: "deb https://dl.bintray.com/rabbitmq-erlang/debian"
     state: present
     update_cache: yes
 
