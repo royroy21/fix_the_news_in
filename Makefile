@@ -18,13 +18,13 @@ help:
 	$(MAKE) usage
 
 database_servers:
-	@ansible-playbook ansible/database_servers.yml -i ansible/inventories/staging/database_servers --vault-id ansible/password.txt
+	@ansible-playbook ansible/database_servers.yml -i ansible/inventories/staging/database --vault-id ansible/password.txt
 
 default_celery_worker_servers:
-	@ansible-playbook ansible/default_celery_worker_servers.yml -i ansible/inventories/staging/default_celery_worker_servers --vault-id ansible/password.txt
+	@ansible-playbook ansible/default_celery_worker_servers.yml -i ansible/inventories/staging/default_celery_worker --vault-id ansible/password.txt
 
 django_servers:
-	@ansible-playbook ansible/django_servers.yml -i ansible/inventories/staging/django_servers --vault-id ansible/password.txt
+	@ansible-playbook ansible/django_servers.yml -i ansible/inventories/staging/django --vault-id ansible/password.txt
 
 django_servers:
-	@ansible-playbook ansible/webapp_servers.yml -i ansible/inventories/staging/webapp_servers --vault-id ansible/password.txt
+	@ansible-playbook ansible/webapp_servers.yml -i ansible/inventories/staging/webapp --vault-id ansible/password.txt
