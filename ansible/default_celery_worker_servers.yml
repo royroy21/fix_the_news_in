@@ -1,0 +1,5 @@
+---
+- name: install and configure default celery worker
+  hosts: django_servers
+  roles:
+    - django_install_project

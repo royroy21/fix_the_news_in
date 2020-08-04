@@ -2,7 +2,9 @@
 - name: install and configure Django and Nginx
   hosts: django_servers
   roles:
-    - django
+    - django_install_project
+    - django_collect_static
+    - django_run_migrations
     - uwsgi
     - copy_ssl_certificates
     - nginx
