@@ -13,6 +13,26 @@
     name: celery
     group: celery
 
+- name: create celery run directory
+  become: yes
+  become_method: sudo
+  file:
+    group: root
+    owner: root
+    path: /var/run/celery
+    state: directory
+    mode: "0755"
+
+- name: create celery logs directory
+  become: yes
+  become_method: sudo
+  file:
+    group: root
+    owner: root
+    path: /var/log/celery
+    state: directory
+    mode: "0644"
+
 - name: template a file to /etc/systemd/system/celery.service
   become: yes
   become_method: sudo
