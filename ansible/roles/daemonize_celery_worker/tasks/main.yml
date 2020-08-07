@@ -33,6 +33,16 @@
     state: directory
     mode: "0644"
 
+- name: create /opt/celery directory
+  become: yes
+  become_method: sudo
+  file:
+    group: celery
+    owner: root
+    path: /opt/celery
+    state: directory
+    mode: "0755"
+
 - name: template a file to /etc/systemd/system/celery.service
   become: yes
   become_method: sudo
