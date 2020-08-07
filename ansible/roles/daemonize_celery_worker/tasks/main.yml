@@ -1,4 +1,9 @@
 ---
+- name: ensure group "celery" exists
+  group:
+    name: celery
+    state: present
+
 - name: create celery user
   user:
     name: celery
