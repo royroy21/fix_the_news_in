@@ -1,10 +1,14 @@
 ---
 - name: ensure group "celery" exists
+  become: yes
+  become_method: sudo
   group:
     name: celery
     state: present
 
 - name: create celery user
+  become: yes
+  become_method: sudo
   user:
     name: celery
     group: celery
