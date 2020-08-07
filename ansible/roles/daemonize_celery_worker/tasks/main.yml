@@ -17,27 +17,27 @@
   become: yes
   become_method: sudo
   file:
-    group: celery
+    group: root
     owner: root
     path: /var/run/celery
     state: directory
-    mode: "0755"
+    mode: "0775"
 
 - name: create celery logs directory
   become: yes
   become_method: sudo
   file:
-    group: celery
+    group: root
     owner: root
     path: /var/log/celery
     state: directory
-    mode: "0664"
+    mode: "0755"
 
 - name: create /opt/celery directory
   become: yes
   become_method: sudo
   file:
-    group: celery
+    group: root
     owner: root
     path: /opt/celery
     state: directory
@@ -51,14 +51,14 @@
     src: roles/daemonize_celery_worker/templates/celery.service
     dest: /etc/systemd/system/celery.service
     owner: root
-    group: celery
+    group: root
     mode: "0644"
 
 - name: make celery conf directory
   become: yes
   become_method: sudo
   file:
-    group: celery
+    group: root
     owner: root
     path: "{{ celery_conf_directory }}"
     state: directory
@@ -72,5 +72,5 @@
     src: roles/daemonize_celery_worker/templates/celery.conf
     dest: "{{ celery_conf_path }}"
     owner: root
-    group: celery
+    group: root
     mode: "0644"
