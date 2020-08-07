@@ -31,7 +31,7 @@
     owner: root
     path: /var/log/celery
     state: directory
-    mode: "0644"
+    mode: "0664"
 
 - name: create /opt/celery directory
   become: yes
