@@ -1,4 +1,9 @@
 ---
+- name: create celery user
+  user:
+    name: celery
+    group: celery
+
 - name: template a file to /etc/systemd/system/celery.service
   become: yes
   become_method: sudo
