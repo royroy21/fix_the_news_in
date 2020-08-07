@@ -18,6 +18,7 @@
 - name: install rabbitmq
   become: yes
   become_method: sudo
+  notify: restart rabbit
   apt:
     name: rabbitmq-server
     state: present
@@ -27,16 +28,10 @@
 - name: enable rabbitmq plugins
   become: yes
   become_method: sudo
+  notify: restart rabbit
   rabbitmq_plugin:
     names: rabbitmq_management
     state: enabled
-
-- name: restart rabbit
-  become: yes
-  become_method: sudo
-  service:
-    name: rabbitmq-server
-    state: restarted
 
 # TODO - cannot login with this user.
 # Currently creating user manually

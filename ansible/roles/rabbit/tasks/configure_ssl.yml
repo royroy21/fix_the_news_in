@@ -1,0 +1,11 @@
+---
+- name: template a file to /etc/rabbitmq/rabbitmq.conf
+  become: yes
+  become_method: sudo
+  notify: restart rabbit
+  template:
+    src: roles/rabbit/templates/rabbitmq.conf
+    dest: /etc/rabbitmq/rabbitmq.conf
+    owner: root
+    group: root
+    mode: "0644"
