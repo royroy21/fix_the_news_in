@@ -5,6 +5,7 @@
 	default_celery_worker_servers \
 	django_servers \
 	webapp_servers \
+	renew_ssl \
 
 usage:
 	@echo "Available commands:"
@@ -13,6 +14,7 @@ usage:
 	@echo "default_celery_worker_servers		Push ansible config to default celery worker servers"
 	@echo "django_servers						Push ansible config to django servers"
 	@echo "webapp_servers						Push ansible config to webapp servers"
+	@echo "renew_ssl							Renew SSL certificates and push to required servers"
 
 help:
 	$(MAKE) usage
@@ -29,3 +31,8 @@ django_servers:
 
 webapp_servers:
 	@ansible-playbook ansible/webapp_servers.yml -i ansible/inventories/staging/webapp --vault-id ansible/password.txt
+
+renew_ssl:
+	@certbot renew
+	$(MAKE) django_servers
+	$(MAKE) webapp_servers
