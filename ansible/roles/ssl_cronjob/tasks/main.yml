@@ -1,5 +1,5 @@
 ---
-- name: setup renew SSL cronjob
+- name: setup SSL cronjob
   become: yes
   become_method: sudo
   cron:
@@ -7,4 +7,4 @@
     minute: "0"
     hour: "3"
     month: "JAN,APR,JUL,OCT"
-    job: "cd /code && make renew_ssl"
+    job: cd /code && make renew_ssl
