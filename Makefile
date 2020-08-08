@@ -33,6 +33,6 @@ webapp_servers:
 	@ansible-playbook ansible/webapp_servers.yml -i ansible/inventories/staging/webapp --vault-id ansible/password.txt
 
 renew_ssl:
-	@certbot renew
+	@certbot renew --dns-cloudflare-credentials /cloudflare/cloudflare.ini
 	$(MAKE) django_servers
 	$(MAKE) webapp_servers
