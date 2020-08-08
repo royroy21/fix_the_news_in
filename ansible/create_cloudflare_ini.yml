@@ -1,0 +1,5 @@
+---
+- name: create cloudflare.ini
+  hosts: devops
+  roles:
+    - create_cloudflare_ini
