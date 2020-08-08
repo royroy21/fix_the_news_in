@@ -1,0 +1,20 @@
+---
+- name: create cloudflare directory
+  become: yes
+  become_method: sudo
+  file:
+    group: root
+    owner: root
+    path: "{{ cloudflare_directory }}"
+    state: directory
+    mode: "0770"
+
+- name: template a file to "{{ cloudflare_directory }}/cloudflare.ini"
+  become: yes
+  become_method: sudo
+  template:
+    src: roles/create_cloudflare_ini/templates/cloudflare.j2
+    dest: "{{ cloudflare_directory }}/cloudflare.ini"
+    owner: root
+    group: root
+    mode: "0600"
