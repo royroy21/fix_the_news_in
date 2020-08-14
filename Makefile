@@ -10,13 +10,13 @@
 
 usage:
 	@echo "Available commands:"
-	@echo "help 								Display available commands"
-	@echo "database_servers						Push ansible config to database servers"
-	@echo "default_celery_worker_servers		Push ansible config to default celery worker servers"
-	@echo "django_servers						Push ansible config to django servers"
-	@echo "webapp_servers						Push ansible config to webapp servers"
-	@echo "renew_ssl							Renew SSL certificates and push to required servers"
-	@echo "scoring_worker_servers				Push ansible config to scoring worker servers"
+	@echo "help 				Display available commands"
+	@echo "database_servers			Push ansible config to database servers"
+	@echo "default_celery_worker_servers	Push ansible config to default celery worker servers"
+	@echo "django_servers			Push ansible config to django servers"
+	@echo "webapp_servers			Push ansible config to webapp servers"
+	@echo "renew_ssl			Renew SSL certificates and push to required servers"
+	@echo "scoring_worker_servers		Push ansible config to scoring worker servers"
 
 help:
 	$(MAKE) usage
