@@ -6,6 +6,7 @@
 	django_servers \
 	webapp_servers \
 	renew_ssl \
+	scoring_worker_servers \
 
 usage:
 	@echo "Available commands:"
@@ -15,6 +16,7 @@ usage:
 	@echo "django_servers						Push ansible config to django servers"
 	@echo "webapp_servers						Push ansible config to webapp servers"
 	@echo "renew_ssl							Renew SSL certificates and push to required servers"
+	@echo "scoring_worker_servers				Push ansible config to scoring worker servers"
 
 help:
 	$(MAKE) usage
@@ -28,6 +30,7 @@ default_celery_worker_servers:
 django_servers:
 	@ansible-playbook ansible/django_servers.yml -i ansible/inventories/staging/django --vault-id ansible/password.txt
 	$(MAKE) default_celery_worker_servers
+	$(MAKE) scoring_worker_servers
 
 webapp_servers:
 	@ansible-playbook ansible/webapp_servers.yml -i ansible/inventories/staging/webapp --vault-id ansible/password.txt
@@ -36,3 +39,6 @@ renew_ssl:
 	@certbot renew --dns-cloudflare-credentials /cloudflare/cloudflare.ini
 	$(MAKE) django_servers
 	$(MAKE) webapp_servers
+
+scoring_worker_servers:
+	@ansible-playbook ansible/scoring_worker_servers.yml -i ansible/inventories/staging/scoring_worker --vault-id ansible/password.txt
