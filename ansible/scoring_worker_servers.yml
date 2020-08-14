@@ -1,0 +1,6 @@
+---
+- name: install and configure default celery worker
+  hosts: scoring_worker_servers
+  roles:
+    - django_install_project
+    - daemonize_celery_worker
