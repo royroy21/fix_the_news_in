@@ -27,7 +27,7 @@
   become: yes
   become_method: sudo
   file:
-    group: root
+    group: celery
     owner: root
     path: /var/log/celery
     state: directory
