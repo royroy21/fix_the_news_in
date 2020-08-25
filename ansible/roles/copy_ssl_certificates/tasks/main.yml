@@ -5,17 +5,33 @@
   file:
     group: root
     owner: root
-    path: /etc/letsencrypt/live/fixthenews.com
+    path: /etc/letsencrypt/{{ item }}/fixthenews.com
     state: directory
     mode: "0755"
+  loop:
+    - archive
+    - live
 
-- name: copy SSL files
-  copy:
-    src: /etc/letsencrypt/live/fixthenews.com/{{ item }}
-    dest: /etc/letsencrypt/live/fixthenews.com/{{ item }}
+- name: sync /etc/letsencrypt
+  become: yes
+  become_method: sudo
+  synchronize:
+    src: /etc/letsencrypt/archive/fixthenews.com/{{ item }}
+    dest: /etc/letsencrypt/archive/fixthenews.com/{{ item }}
+  loop:
+    - fullchain1.pem
+    - privkey1.pem
+
+- name: create symbolic links
+  become: yes
+  become_method: sudo
+  file:
+    src: /etc/letsencrypt/archive/fixthenews.com/{{ item.archive_name }}
+    dest: /etc/letsencrypt/live/fixthenews.com/{{ item.live_name }}
     owner: root
     group: root
+    state: link
     mode: "0777"
   loop:
-    - fullchain.pem
-    - privkey.pem
+    - { archive_name: fullchain1.pem, live_name: fullchain.pem }
+    - { archive_name: privkey1.pem, live_name:  privkey.pem }
