@@ -9,7 +9,7 @@ Group=celery
 EnvironmentFile={{ celery_conf_path }}
 WorkingDirectory={{ project_path }}/
 ExecStart=/bin/sh -c '${CELERY_BIN} beat \
-  -A ${CELERY_APP} -Q ${QUEUE} --pidfile=${CELERYD_PID_FILE} \
+  -A ${CELERY_APP} --pidfile=${CELERYD_PID_FILE} \
   --logfile=${CELERYD_LOG_FILE} --loglevel=${CELERYD_LOG_LEVEL}'
 
 [Install]
