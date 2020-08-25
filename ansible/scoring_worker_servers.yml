@@ -3,4 +3,4 @@
   hosts: scoring_worker_servers
   roles:
     - django_install_project
-    - daemonize_celery_beat
+    - daemonize_celery_worker
