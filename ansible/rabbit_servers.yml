@@ -1,6 +1,6 @@
 ---
 - name: install and configure RabbitMQ
-  hosts: django_servers
+  hosts: rabbit_servers
   roles:
     - copy_ssl_certificates
     - rabbit
