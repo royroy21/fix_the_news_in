@@ -22,6 +22,9 @@
     - fullchain1.pem
     - privkey1.pem
 
+# TODO - whenever we update certs the archive name bumps up 1
+# for example fullchain1.pem becomes fullchain2.pem. This needs
+# to be fixed
 - name: create symbolic links
   become: yes
   become_method: sudo
