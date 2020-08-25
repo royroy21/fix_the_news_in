@@ -338,6 +338,26 @@ output "scoring_worker_server_private_ip" {
 }
 
 ###############################################################################
+# Celery Beat
+###############################################################################
+resource "aws_instance" "beat" {
+  ami                    = "ami-0917237b4e71c5759"
+  instance_type          = "t2.micro"
+  key_name               = aws_key_pair.deployer.key_name
+  tags                   = {
+    Name = "${var.environment}_fn_beat",
+  }
+  vpc_security_group_ids = [
+    aws_security_group.rabbit.id,
+    aws_security_group.ssh.id,
+  ]
+}
+
+output "beat_server_private_ip" {
+  value = aws_instance.beat.private_ip
+}
+
+###############################################################################
 # S3
 ###############################################################################
 resource "aws_s3_bucket" "media" {
