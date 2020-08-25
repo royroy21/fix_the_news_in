@@ -1,0 +1,76 @@
+---
+- name: ensure group "celery" exists
+  become: yes
+  become_method: sudo
+  group:
+    name: celery
+    state: present
+
+- name: create celery user
+  become: yes
+  become_method: sudo
+  user:
+    name: celery
+    groups: celery,www-data
+
+- name: create celery run directory
+  become: yes
+  become_method: sudo
+  file:
+    group: celery
+    owner: root
+    path: /var/run/celery
+    state: directory
+    mode: "0775"
+
+- name: create celery logs directory
+  become: yes
+  become_method: sudo
+  file:
+    group: celery
+    owner: celery
+    path: /var/log/celery
+    state: directory
+    mode: "0755"
+
+- name: create /opt/celery directory
+  become: yes
+  become_method: sudo
+  file:
+    group: root
+    owner: root
+    path: /opt/celery
+    state: directory
+    mode: "0755"
+
+- name: template a file to /etc/systemd/system/celery.service
+  become: yes
+  become_method: sudo
+  notify: restart celery
+  template:
+    src: roles/daemonize_celery_worker/templates/celery.service
+    dest: /etc/systemd/system/celery.service
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: make celery conf directory
+  become: yes
+  become_method: sudo
+  file:
+    group: root
+    owner: root
+    path: "{{ celery_conf_directory }}"
+    state: directory
+    mode: "0755"
+
+- name: "template a file to {{ celery_conf_path }}"
+  become: yes
+  become_method: sudo
+  notify: restart celery
+  template:
+    src: roles/daemonize_celery_worker/templates/celery.conf
+    dest: "{{ celery_conf_path }}"
+    owner: root
+    group: root
+    mode: "0644"

@@ -1,0 +1,7 @@
+---
+- name: restart celery
+  become: yes
+  become_method: sudo
+  service:
+    name: celery
+    state: restarted
