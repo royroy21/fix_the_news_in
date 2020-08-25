@@ -28,7 +28,7 @@
   become_method: sudo
   file:
     group: celery
-    owner: root
+    owner: celery
     path: /var/log/celery
     state: directory
     mode: "0755"
