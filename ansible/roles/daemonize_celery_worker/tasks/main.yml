@@ -46,7 +46,6 @@
 - name: template a file to /etc/systemd/system/celery.service
   become: yes
   become_method: sudo
-  notify: restart celery
   template:
     src: roles/daemonize_celery_worker/templates/celery.service
     dest: /etc/systemd/system/celery.service
@@ -67,7 +66,6 @@
 - name: "template a file to {{ celery_conf_path }}"
   become: yes
   become_method: sudo
-  notify: restart celery
   template:
     src: roles/daemonize_celery_worker/templates/celery.conf
     dest: "{{ celery_conf_path }}"
