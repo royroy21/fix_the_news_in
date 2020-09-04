@@ -1,6 +1,8 @@
 resource "aws_instance" "webapp" {
   ami                    = "ami-0917237b4e71c5759"
   instance_type          = var.webapp_instance_type
+  key_name               = var.key_name
+  vpc_security_group_ids = var.vpc_security_group_ids
   tags                   = {
     Name = "${var.environment}_fn_webapp",
   }
