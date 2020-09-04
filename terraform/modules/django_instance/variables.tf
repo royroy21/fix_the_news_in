@@ -20,6 +20,6 @@ variable "key_name" {
 }
 
 variable "vpc_security_group_ids" {
-  type        = list(number)
+  type        = list(string)
   description = "VPC security group ids"
 }
