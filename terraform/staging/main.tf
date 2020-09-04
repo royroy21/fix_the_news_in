@@ -57,6 +57,14 @@ module "django_module" {
   ]
 }
 
+output "django_server_public_ip" {
+  value = module.django_module.django_server_public_ip
+}
+
+output "django_server_private_ip" {
+  value = module.django_module.django_server_private_ip
+}
+
 module "database_instance" {
   environment = var.environment
   key_name    = aws_key_pair.deployer.key_name
@@ -65,6 +73,10 @@ module "database_instance" {
     module.security_group_postgres.security_group_postgres_id,
     module.security_group_ssh.security_group_ssh_id,
   ]
+}
+
+output "database_server_private_ip" {
+  value = module.database_instance.database_server_private_ip
 }
 
 module "webapp_instance" {
@@ -80,6 +92,10 @@ module "webapp_instance" {
   ]
 }
 
+output "webapp_server_public_ip" {
+  value = module.webapp_instance.webapp_server_public_ip
+}
+
 module "rabbit_instance" {
   environment = var.environment
   key_name    = aws_key_pair.deployer.key_name
@@ -89,6 +105,10 @@ module "rabbit_instance" {
     module.security_group_rabbit_management.security_group_rabbit_management_id,
     module.security_group_ssh.security_group_ssh_id,
   ]
+}
+
+output "rabbit_server_private_ip" {
+  value = module.rabbit_instance.rabbit_server_private_ip
 }
 
 module "default_celery_worker_instance" {
@@ -101,6 +121,10 @@ module "default_celery_worker_instance" {
   ]
 }
 
+output "default_celery_worker_server_private_ip" {
+  value = module.default_celery_worker_instance.default_celery_worker_server_private_ip
+}
+
 module "scoring_worker_instance" {
   environment = var.environment
   key_name    = aws_key_pair.deployer.key_name
@@ -111,6 +135,10 @@ module "scoring_worker_instance" {
   ]
 }
 
+output "scoring_worker_server_private_ip" {
+  value = module.scoring_worker_instance.scoring_worker_server_private_ip
+}
+
 module "celery_beat_instance" {
   environment = var.environment
   key_name    = aws_key_pair.deployer.key_name
@@ -119,6 +147,10 @@ module "celery_beat_instance" {
     module.security_group_rabbit.security_group_rabbit_id,
     module.security_group_ssh.security_group_ssh_id,
   ]
+}
+
+output "beat_server_private_ip" {
+  value = module.celery_beat_instance.beat_server_private_ip
 }
 
 module "s3_instance" {
