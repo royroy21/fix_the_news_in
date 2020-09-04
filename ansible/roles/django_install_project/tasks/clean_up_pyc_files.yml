@@ -1,7 +1,7 @@
 ---
-- name: delete all .pyc and __pycache__ files in django source code
+- name: delete all .pyc files in django source code
   become: yes
   become_method: sudo
-  command: find . -type d -name __pycache__ -delete
+  command: find . -name '*.pyc' -delete
   args:
     chdir: "{{ project_path }}"
