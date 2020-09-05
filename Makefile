@@ -26,30 +26,30 @@ help:
 	$(MAKE) usage
 
 beat_servers:
-	@ansible-playbook ansible/beat_servers.yml -i ansible/inventories/staging/beat --vault-id ansible/password.txt
+	@ansible-playbook ansible/beat_servers.yml -i ansible/inventories/${ENV}/beat --vault-id ansible/password.txt
 
 database_servers:
-	@ansible-playbook ansible/database_servers.yml -i ansible/inventories/staging/database --vault-id ansible/password.txt
+	@ansible-playbook ansible/database_servers.yml -i ansible/inventories/${ENV}/database --vault-id ansible/password.txt
 
 default_celery_worker_servers:
-	@ansible-playbook ansible/default_celery_worker_servers.yml -i ansible/inventories/staging/default_celery_worker --vault-id ansible/password.txt
+	@ansible-playbook ansible/default_celery_worker_servers.yml -i ansible/inventories/${ENV}/default_celery_worker --vault-id ansible/password.txt
 
 django_servers:
-	@ansible-playbook ansible/django_servers.yml -i ansible/inventories/staging/django --vault-id ansible/password.txt
-	$(MAKE) default_celery_worker_servers
-	$(MAKE) scoring_worker_servers
-	$(MAKE) beat_servers
+	@ansible-playbook ansible/django_servers.yml -i ansible/inventories/${ENV}/django --vault-id ansible/password.txt
+	$(MAKE) default_celery_worker_servers ${ENV}
+	$(MAKE) scoring_worker_servers ${ENV}
+	$(MAKE) beat_servers ${ENV}
 
 webapp_servers:
-	@ansible-playbook ansible/webapp_servers.yml -i ansible/inventories/staging/webapp --vault-id ansible/password.txt
+	@ansible-playbook ansible/webapp_servers.yml -i ansible/inventories/${ENV}/webapp --vault-id ansible/password.txt
 
 rabbit_servers:
-	@ansible-playbook ansible/rabbit_servers.yml -i ansible/inventories/staging/rabbit --vault-id ansible/password.txt
+	@ansible-playbook ansible/rabbit_servers.yml -i ansible/inventories/${ENV}/rabbit --vault-id ansible/password.txt
 
 renew_ssl:
 	@certbot renew --dns-cloudflare-credentials /cloudflare/cloudflare.ini
-	$(MAKE) django_servers
-	$(MAKE) webapp_servers
+	$(MAKE) django_servers ${ENV}
+	$(MAKE) webapp_servers ${ENV}
 
 scoring_worker_servers:
-	@ansible-playbook ansible/scoring_worker_servers.yml -i ansible/inventories/staging/scoring_worker --vault-id ansible/password.txt
+	@ansible-playbook ansible/scoring_worker_servers.yml -i ansible/inventories/${ENV}/scoring_worker --vault-id ansible/password.txt
