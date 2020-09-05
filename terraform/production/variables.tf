@@ -22,6 +22,11 @@ variable "cloudflare_zone_id" {
   description = "DNS zone id for Cloudflare"
 }
 
+variable "instance_type_mini" {
+  description = "instance_type_mini"
+  default     = "t2.mini"
+}
+
 variable "public_key" {
   description = "Public key used for ssh into AWS servers"
 }

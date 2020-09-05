@@ -47,7 +47,7 @@ module "django_instance" {
   django_name        = var.django_name
   cloudflare_zone_id = var.cloudflare_zone_id
   environment        = var.environment
-  instance_type      = "t2.mini"
+  instance_type      = var.instance_type_mini
   key_name           = aws_key_pair.deployer.key_name
   source             = "../modules/django_instance"
   vpc_security_group_ids = [
@@ -68,7 +68,7 @@ output "django_server_private_ip" {
 
 module "database_instance" {
   environment   = var.environment
-  instance_type = "t2.mini"
+  instance_type = var.instance_type_mini
   key_name      = aws_key_pair.deployer.key_name
   source        = "../modules/database_instance"
   vpc_security_group_ids = [
@@ -84,7 +84,7 @@ output "database_server_private_ip" {
 module "webapp_instance" {
   environment        = var.environment
   cloudflare_zone_id = var.cloudflare_zone_id
-  instance_type      = "t2.mini"
+  instance_type      = var.instance_type_mini
   key_name           = aws_key_pair.deployer.key_name
   source             = "../modules/webapp_instance"
   webapp_name        = var.webapp_name
