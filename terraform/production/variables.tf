@@ -22,9 +22,9 @@ variable "cloudflare_zone_id" {
   description = "DNS zone id for Cloudflare"
 }
 
-variable "instance_type_mini" {
-  description = "instance_type_mini"
-  default     = "t2.mini"
+variable "instance_type_small" {
+  description = "instance_type_small"
+  default     = "t2.small"
 }
 
 variable "public_key" {
