@@ -9,8 +9,8 @@ resource "aws_instance" "django" {
 }
 
 resource "aws_eip" "django" {
-    vpc      = true
-    instance = aws_instance.django.id
+  vpc      = true
+  instance = aws_instance.django.id
 }
 
 output "django_server_public_ip" {

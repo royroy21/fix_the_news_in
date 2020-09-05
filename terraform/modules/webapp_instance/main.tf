@@ -9,8 +9,8 @@ resource "aws_instance" "webapp" {
 }
 
 resource "aws_eip" "webapp" {
-    vpc      = true
-    instance = aws_instance.webapp.id
+  vpc      = true
+  instance = aws_instance.webapp.id
 }
 
 output "webapp_server_public_ip" {
