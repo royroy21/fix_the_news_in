@@ -43,7 +43,7 @@ module "security_group_rabbit_management" {
   source      = "../modules/security_group_rabbit_management"
 }
 
-module "django_module" {
+module "django_instance" {
   django_name        = var.django_name
   cloudflare_zone_id = var.cloudflare_zone_id
   environment        = var.environment
@@ -58,11 +58,11 @@ module "django_module" {
 }
 
 output "django_server_public_ip" {
-  value = module.django_module.django_server_public_ip
+  value = module.django_instance.django_server_public_ip
 }
 
 output "django_server_private_ip" {
-  value = module.django_module.django_server_private_ip
+  value = module.django_instance.django_server_private_ip
 }
 
 module "database_instance" {
