@@ -34,6 +34,9 @@ database_servers:
 default_celery_worker_servers:
 	@ansible-playbook ansible/default_celery_worker_servers.yml -i ansible/inventories/${ENV}/default_celery_worker --vault-id ansible/password.txt
 
+scoring_worker_servers:
+	@ansible-playbook ansible/scoring_worker_servers.yml -i ansible/inventories/${ENV}/scoring_worker --vault-id ansible/password.txt
+
 django_servers:
 	@ansible-playbook ansible/django_servers.yml -i ansible/inventories/${ENV}/django --vault-id ansible/password.txt
 	$(MAKE) default_celery_worker_servers ${ENV}
@@ -50,6 +53,3 @@ renew_ssl:
 	@certbot renew --dns-cloudflare-credentials /cloudflare/cloudflare.ini
 	$(MAKE) django_servers ${ENV}
 	$(MAKE) webapp_servers ${ENV}
-
-scoring_worker_servers:
-	@ansible-playbook ansible/scoring_worker_servers.yml -i ansible/inventories/${ENV}/scoring_worker --vault-id ansible/password.txt
