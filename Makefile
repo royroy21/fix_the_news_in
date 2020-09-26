@@ -12,15 +12,15 @@
 
 usage:
 	@echo "Available commands:"
-	@echo "help 				Display available commands"
-	@echo "beat_servers			Push ansible config to beat_servers"
-	@echo "database_servers			Push ansible config to database servers"
-	@echo "default_celery_worker_servers	Push ansible config to default celery worker servers"
-	@echo "django_servers			Push ansible config to django servers"
-	@echo "webapp_servers			Push ansible config to webapp servers"
-	@echo "rabbit_servers			Push ansible config to rabbit servers"
-	@echo "renew_ssl			Renew SSL certificates and push to required servers"
-	@echo "scoring_worker_servers		Push ansible config to scoring worker servers"
+	@echo "help.............................Display available commands"
+	@echo "beat_servers.....................Push ansible config to beat_servers"
+	@echo "database_servers.................Push ansible config to database servers"
+	@echo "default_celery_worker_servers....Push ansible config to default celery worker servers"
+	@echo "django_servers...................Push ansible config to django servers"
+	@echo "webapp_servers...................Push ansible config to webapp servers"
+	@echo "rabbit_servers...................Push ansible config to rabbit servers"
+	@echo "renew_ssl........................Renew SSL certificates and push to required servers"
+	@echo "scoring_worker_servers...........Push ansible config to scoring worker servers"
 
 help:
 	$(MAKE) usage
@@ -39,9 +39,9 @@ scoring_worker_servers:
 
 django_servers:
 	@ansible-playbook ansible/django_servers.yml -i ansible/inventories/${ENV}/django --vault-id ansible/password.txt
-	$(MAKE) default_celery_worker_servers ${ENV}
-	$(MAKE) scoring_worker_servers ${ENV}
-	$(MAKE) beat_servers ${ENV}
+	$(MAKE) default_celery_worker_servers ENV=$(ENV)
+	$(MAKE) scoring_worker_servers ENV=$(ENV)
+	$(MAKE) beat_servers ENV=$(ENV)
 
 webapp_servers:
 	@ansible-playbook ansible/webapp_servers.yml -i ansible/inventories/${ENV}/webapp --vault-id ansible/password.txt
@@ -51,5 +51,7 @@ rabbit_servers:
 
 renew_ssl:
 	@certbot renew --dns-cloudflare-credentials /cloudflare/cloudflare.ini
-	$(MAKE) django_servers ${ENV}
-	$(MAKE) webapp_servers ${ENV}
+	$(MAKE) django_servers ENV=$('staging')
+	$(MAKE) webapp_servers ENV=$('staging')
+	$(MAKE) django_servers ENV=$('production')
+	$(MAKE) webapp_servers ENV=$('production')
