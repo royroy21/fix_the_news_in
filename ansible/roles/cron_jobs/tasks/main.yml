@@ -18,7 +18,7 @@
     name: "score topics"
     minute: "0"
     hour: "5,8,11,14,17,20,23"
-    job: "./{{ project_root }}/score_topics.sh"
+    job: ".{{ project_root }}/score_topics.sh"
 
 - name: template script for score news items cron job
   become: yes
@@ -39,4 +39,4 @@
     name: "score news items"
     minute: "0"
     hour: "5,8,11,14,17,20,23"
-    job: "./{{ project_root }}/score_news_items.sh"
+    job: ".{{ project_root }}/score_news_items.sh"
