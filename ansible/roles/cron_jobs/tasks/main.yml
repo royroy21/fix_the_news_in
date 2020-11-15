@@ -1,5 +1,7 @@
 ---
 - name: template script for score topics cron job
+  become: yes
+  become_user: "{{ project_user }}"
   vars:
       django_command: "score_topics"
   template:
@@ -10,6 +12,8 @@
     mode: "0755"
 
 - name: "Cron job to score topics"
+  become: yes
+  become_user: "{{ project_user }}"
   cron:
     name: "score topics"
     minute: "0"
@@ -17,6 +21,8 @@
     job: "./{{ project_root }}/score_topics.sh"
 
 - name: template script for score news items cron job
+  become: yes
+  become_user: "{{ project_user }}"
   vars:
       django_command: "score_news_items"
   template:
@@ -27,6 +33,8 @@
     mode: "0755"
 
 - name: "Cron job to score news items"
+  become: yes
+  become_user: "{{ project_user }}"
   cron:
     name: "score news items"
     minute: "0"
