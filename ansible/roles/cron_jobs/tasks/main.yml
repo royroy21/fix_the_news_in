@@ -1,7 +1,7 @@
 ---
 - name: template script for score topics cron job
   become: yes
-  become_user: "{{ project_user }}"
+  become_method: sudo
   vars:
       django_command: "score_topics"
   template:
@@ -13,7 +13,7 @@
 
 - name: "Cron job to score topics"
   become: yes
-  become_user: "{{ project_user }}"
+  become_method: sudo
   cron:
     name: "score topics"
     minute: "0"
@@ -22,7 +22,7 @@
 
 - name: template script for score news items cron job
   become: yes
-  become_user: "{{ project_user }}"
+  become_method: sudo
   vars:
       django_command: "score_news_items"
   template:
@@ -34,7 +34,7 @@
 
 - name: "Cron job to score news items"
   become: yes
-  become_user: "{{ project_user }}"
+  become_method: sudo
   cron:
     name: "score news items"
     minute: "0"
