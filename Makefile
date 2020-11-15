@@ -39,9 +39,6 @@ scoring_worker_servers:
 
 django_servers:
 	@ansible-playbook ansible/django_servers.yml -i ansible/inventories/${ENV}/django --vault-id ansible/password.txt
-	$(MAKE) default_celery_worker_servers ENV=$(ENV)
-	$(MAKE) scoring_worker_servers ENV=$(ENV)
-	$(MAKE) beat_servers ENV=$(ENV)
 
 webapp_servers:
 	@ansible-playbook ansible/webapp_servers.yml -i ansible/inventories/${ENV}/webapp --vault-id ansible/password.txt

@@ -99,63 +99,6 @@ output "webapp_server_public_ip" {
   value = module.webapp_instance.webapp_server_public_ip
 }
 
-module "rabbit_instance" {
-  environment = var.environment
-  key_name    = aws_key_pair.deployer.key_name
-  source      = "../modules/rabbit_instance"
-  vpc_security_group_ids = [
-    module.security_group_rabbit.security_group_rabbit_id,
-    module.security_group_rabbit_management.security_group_rabbit_management_id,
-    module.security_group_ssh.security_group_ssh_id,
-  ]
-}
-
-output "rabbit_server_private_ip" {
-  value = module.rabbit_instance.rabbit_server_private_ip
-}
-
-module "default_celery_worker_instance" {
-  environment = var.environment
-  key_name    = aws_key_pair.deployer.key_name
-  source      = "../modules/default_celery_worker_instance"
-  vpc_security_group_ids = [
-    module.security_group_rabbit.security_group_rabbit_id,
-    module.security_group_ssh.security_group_ssh_id,
-  ]
-}
-
-output "default_celery_worker_server_private_ip" {
-  value = module.default_celery_worker_instance.default_celery_worker_server_private_ip
-}
-
-module "scoring_worker_instance" {
-  environment = var.environment
-  key_name    = aws_key_pair.deployer.key_name
-  source      = "../modules/scoring_worker_instance"
-  vpc_security_group_ids = [
-    module.security_group_rabbit.security_group_rabbit_id,
-    module.security_group_ssh.security_group_ssh_id,
-  ]
-}
-
-output "scoring_worker_server_private_ip" {
-  value = module.scoring_worker_instance.scoring_worker_server_private_ip
-}
-
-module "celery_beat_instance" {
-  environment = var.environment
-  key_name    = aws_key_pair.deployer.key_name
-  source      = "../modules/celery_beat_instance"
-  vpc_security_group_ids = [
-    module.security_group_rabbit.security_group_rabbit_id,
-    module.security_group_ssh.security_group_ssh_id,
-  ]
-}
-
-output "beat_server_private_ip" {
-  value = module.celery_beat_instance.beat_server_private_ip
-}
-
 module "s3_instance" {
   environment        = var.environment
   cloudflare_zone_id = var.cloudflare_zone_id
