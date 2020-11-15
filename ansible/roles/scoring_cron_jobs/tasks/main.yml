@@ -1,0 +1,14 @@
+---
+- name: "Cron job to score topics"
+  cron:
+    name: "score topics"
+    minute: "0"
+    hour: "5,8,11,14,17,20,23"
+    job: "cd {{ project_path }}; {{ project_venv }}/bin/python3 manage.py score_topics"
+
+- name: "Cron job to score news items"
+  cron:
+    name: "score news items"
+    minute: "0"
+    hour: "5,8,11,14,17,20,23"
+    job: "cd {{ project_path }}; {{ project_venv }}/bin/python3 manage.py score_news_items"
