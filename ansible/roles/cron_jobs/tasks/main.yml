@@ -1,0 +1,30 @@
+---
+- name: template script for score topics cron job
+  template:
+    src: roles/cron_jobs/templates/django_cron_jobs.j2
+    dest: "{{ project_root }}/score_topics.sh"
+    owner: "{{ project_user }}"
+    group: "{{ project_user }}"
+    mode: "0755"
+
+- name: "Cron job to score topics"
+  cron:
+    name: "score topics"
+    minute: "0"
+    hour: "5,8,11,14,17,20,23"
+    job: "./{{ project_root }}/score_topics.sh"
+
+- name: template script for score news items cron job
+  template:
+    src: roles/cron_jobs/templates/django_cron_jobs.j2
+    dest: "{{ project_root }}/score_news_items.sh"
+    owner: "{{ project_user }}"
+    group: "{{ project_user }}"
+    mode: "0755"
+
+- name: "Cron job to score news items"
+  cron:
+    name: "score news items"
+    minute: "0"
+    hour: "5,8,11,14,17,20,23"
+    job: "./{{ project_root }}/score_news_items.sh"
