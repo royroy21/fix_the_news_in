@@ -1,5 +1,7 @@
 ---
 - name: template script for score topics cron job
+  vars:
+      django_command: "score_topics"
   template:
     src: roles/cron_jobs/templates/django_cron_job.j2
     dest: "{{ project_root }}/score_topics.sh"
@@ -15,6 +17,8 @@
     job: "./{{ project_root }}/score_topics.sh"
 
 - name: template script for score news items cron job
+  vars:
+      django_command: "score_news_items"
   template:
     src: roles/cron_jobs/templates/django_cron_job.j2
     dest: "{{ project_root }}/score_news_items.sh"
