@@ -2,7 +2,7 @@ export AWS_ACCESS_KEY_ID={{ AWS_ACCESS_KEY_ID }}
 export AWS_SECRET_ACCESS_KEY={{ AWS_SECRET_ACCESS_KEY }}
 export AWS_S3_REGION_NAME={{ AWS_S3_REGION_NAME }}
 export AWS_MEDIA_BUCKET_NAME={{ AWS_MEDIA_BUCKET_NAME }}
-export SECRET_KEY={{ SECRET_KEY }}
+export SECRET_KEY='{{ SECRET_KEY }}'
 export DEBUG={{ DEBUG }}
 export DJANGO_SETTINGS_MODULE={{ DJANGO_SETTINGS_MODULE }}
 export DATABASE_NAME={{ DATABASE_NAME }}
@@ -18,4 +18,4 @@ export SENTRY_KEY={{ SENTRY_KEY }}
 export SENTRY_ORGANISATION={{ SENTRY_ORGANISATION }}
 export SENTRY_PROJECT={{ SENTRY_PROJECT }}
 
-{{ project_venv }}/bin/python3 manage.py {{ django_command }}
+cd {{ project_path }}; {{ project_venv }}/bin/python3 manage.py {{ django_command }}
