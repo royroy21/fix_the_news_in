@@ -57,7 +57,7 @@
   become: yes
   become_method: sudo
   cron:
-    name: "score news items"
+    name: "add news item images"
     minute: "0"
     hour: "2"
     job: "cd {{ project_root }}; ./add_news_item_images.sh"
