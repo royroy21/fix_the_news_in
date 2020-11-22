@@ -40,3 +40,24 @@
     minute: "0"
     hour: "5,8,11,14,17,20,23"
     job: "cd {{ project_root }}; ./score_news_items.sh"
+
+- name: template script for add news item images items cron job
+  become: yes
+  become_method: sudo
+  vars:
+      django_command: "add_news_item_images"
+  template:
+    src: roles/cron_jobs/templates/django_cron_job.j2
+    dest: "{{ project_root }}/add_news_item_images.sh"
+    owner: "{{ project_user }}"
+    group: "{{ project_user }}"
+    mode: "0755"
+
+- name: "Cron job to add news item images"
+  become: yes
+  become_method: sudo
+  cron:
+    name: "score news items"
+    minute: "0"
+    hour: "2"
+    job: "cd {{ project_root }}; ./add_news_item_images.sh"
